@@ -8,18 +8,21 @@ export RAY_DEDUP_LOGS=1
 
 
 export PROJECT_NAME=verl_train
-export WANDB_API_KEY=TO_BE_FILLED
+export WANDB_API_KEY=E561172e5256b6740723e02d44bf604a3a0b3249
 export WANDB_OFFICIAL=1
 export VLLM_ATTENTION_BACKEND=XFORMERS
-export HDFS_DATA_PATH=TO_BE_FILLED
-export HDFS_MODEL_PATH=TO_BE_FILLED
-export HDFS_CHECKPOINT_PATH=TO_BE_FILLED
-export HDFS_LOG_PATH=TO_BE_FILLED
+export HDFS_DATA_PATH=data
+export HDFS_MODEL_PATH=Qwen
+export HDFS_CHECKPOINT_PATH=checkpoints
+export HDFS_LOG_PATH=logs
 export RUN_NAME=verl-grpo
-export ARNOLD_WORKER_NUM=TO_BE_FILLED # number of nodes you want to use 
+export ARNOLD_WORKER_NUM=1 # number of nodes you want to use 
 
 
 # Default values
+HEAD_IP=127.0.0.1
+HEAD_PORT=8265
+
 TRAIN_BATCH_SIZE=256
 VAL_BATCH_SIZE=500
 MAX_PROMPT_LENGTH=1024
@@ -164,7 +167,7 @@ max_num_batched_tokens=$(expr $MAX_PROMPT_LENGTH + $MAX_RESPONSE_LENGTH + 1000)
 echo -e "Training with the following parameters:\nTrain Batch Size: $TRAIN_BATCH_SIZE\nVal Batch Size: $VAL_BATCH_SIZE\nMax Prompt Length: $MAX_PROMPT_LENGTH\nMax Response Length: $MAX_RESPONSE_LENGTH\nLearning Rate: $LEARNING_RATE\nPPO Mini Batch Size: $PPO_MINI_BATCH_SIZE\nPPO Micro Batch Size: $PPO_MICRO_BATCH_SIZE\nKL Loss Coefficient: $KL_LOSS_COEF\nKL Loss Type: $KL_LOSS_TYPE\nTemperature: $TEMPERATURE\nRollout N: $ROLLOUT_N\nKL Coefficient: $KL_COEF\nTotal Epochs: $TOTAL_EPOCHS\nDataset Name: $DATASET_NAME\nModel Name: $MODEL_NAME"
 
 
-ray job submit --address=${HEAD_IP}:${HEAD_PORT} \
+ray job submit --address=http://${HEAD_IP}:${HEAD_PORT} \
   --entrypoint-num-cpus=1 \
   --runtime-env-json='{
         "working_dir": "'${WORKING_DIR}'",
