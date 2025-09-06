@@ -110,7 +110,8 @@ Our code is implemented based on [Verl](https://github.com/volcengine/verl). We 
 ```bash
 conda create -n verl python==3.11
 conda activate verl
-pip3 install torch==2.4.0 --index-url https://download.pytorch.org/whl/cu124
+pip3 install torch==2.3.0
+pip3 install vllm==0.3.1
 pip3 install flash-attn --no-build-isolation
 pip3 install -e . 
 ```
